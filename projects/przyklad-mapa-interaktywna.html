@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gęstość zaludnienia — mapa interaktywna | CartoGIS</title>
+  <meta name="description" content="Interaktywna mapa choropletowa gęstości zaludnienia zbudowana na Leaflet.">
+  <link rel="icon" href="../assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Leaflet (CDN) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="portfolio.html">
+  <header id="site-header"></header>
+
+  <article class="article">
+    <div class="article-header">
+      <div class="container">
+        <a class="back-link" href="../portfolio.html">← Powrót do portfolio</a>
+        <p class="eyebrow">Projekt · Mapa interaktywna</p>
+        <h1>Gęstość zaludnienia — mapa interaktywna</h1>
+        <div class="tags" style="margin:1rem 0">
+          <span class="tag tag--accent">Leaflet</span>
+          <span class="tag tag--accent">Choropleth</span>
+          <span class="tag tag--accent">Demografia</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container article-body">
+      <p class="lead">
+        Poniżej przykład interaktywnej mapy choropletowej. Najedź kursorem na dowolny obszar,
+        aby zobaczyć jego nazwę i wartość. To działający szablon — podmień dane GeoJSON na własne,
+        a resztę zostaw bez zmian.
+      </p>
+
+      <!-- Kontener mapy -->
+      <div id="map" class="map"></div>
+
+      <h2>O projekcie</h2>
+      <p>
+        Ten opis zastąp własnym. Napisz, skąd pochodzą dane (np. GUS, Eurostat, OpenStreetMap),
+        jakiego okresu dotyczą, jak wykonałeś klasyfikację (kwantyle, naturalne przerwy Jenksa,
+        równe interwały) i dlaczego wybrałeś taką paletę kolorów.
+      </p>
+
+      <h2>Metoda</h2>
+      <p>
+        Dane wektorowe przygotowałem w QGIS, a warstwę wynikową wyeksportowałem do formatu GeoJSON.
+        Mapę renderuję biblioteką <code>Leaflet</code>, kolorując obszary według wartości atrybutu.
+        Podpowiedzi (tooltips) pojawiają się po najechaniu kursorem.
+      </p>
+
+      <blockquote>
+        Wskazówka: dla danych ilościowych stosuj sekwencyjne palety ColorBrewer (np. <code>YlGnBu</code>),
+        a nie tęczy — poprawia to czytelność i dostępność mapy.
+      </blockquote>
+
+      <h2>Dane</h2>
+      <p>
+        W tym przykładzie użyto uproszczonych, poglądowych danych osadzonych bezpośrednio w kodzie.
+        We własnym projekcie wczytaj plik GeoJSON np. tak:
+      </p>
+      <pre><code>fetch('../assets/data/twoje-dane.geojson')
+  .then(r =&gt; r.json())
+  .then(geojson =&gt; L.geoJSON(geojson, { style, onEachFeature }).addTo(map));</code></pre>
+    </div>
+  </article>
+
+  <footer id="site-footer"></footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // ---- Inicjalizacja mapy ---------------------------------------------
+    const map = L.map('map', { scrollWheelZoom: false }).setView([52.07, 19.48], 6);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 19
+    }).addTo(map);
+
+    // ---- Poglądowe dane (podmień na własny GeoJSON) ---------------------
+    // Uproszczone wielokąty kilku województw + przykładowa wartość gęstości.
+    const data = {
+      type: "FeatureCollection",
+      features: [
+        { type:"Feature", properties:{ nazwa:"Mazowieckie", gestosc: 153 },
+          geometry:{ type:"Polygon", coordinates:[[[19.2,52.9],[22.0,52.9],[22.0,51.4],[19.2,51.4],[19.2,52.9]]] } },
+        { type:"Feature", properties:{ nazwa:"Śląskie", gestosc: 364 },
+          geometry:{ type:"Polygon", coordinates:[[[18.3,50.6],[19.5,50.6],[19.5,49.4],[18.3,49.4],[18.3,50.6]]] } },
+        { type:"Feature", properties:{ nazwa:"Wielkopolskie", gestosc: 118 },
+          geometry:{ type:"Polygon", coordinates:[[[15.8,52.9],[18.4,52.9],[18.4,51.3],[15.8,51.3],[15.8,52.9]]] } },
+        { type:"Feature", properties:{ nazwa:"Pomorskie", gestosc: 129 },
+          geometry:{ type:"Polygon", coordinates:[[[16.8,54.8],[19.6,54.8],[19.6,53.6],[16.8,53.6],[16.8,54.8]]] } }
+      ]
+    };
+
+    // ---- Skala barw (sekwencyjna, ColorBrewer YlGnBu) -------------------
+    function kolor(v) {
+      return v > 300 ? '#253494' :
+             v > 150 ? '#2c7fb8' :
+             v > 100 ? '#41b6c4' :
+             v >  50 ? '#a1dab4' : '#ffffcc';
+    }
+    const style = f => ({
+      fillColor: kolor(f.properties.gestosc),
+      weight: 1, opacity: 1, color: '#fff', fillOpacity: 0.8
+    });
+
+    function onEachFeature(feature, layer) {
+      const p = feature.properties;
+      layer.bindTooltip(`<strong>${p.nazwa}</strong><br>${p.gestosc} os./km²`, { sticky: true });
+      layer.on({
+        mouseover: e => e.target.setStyle({ weight: 3, color: '#333', fillOpacity: 0.95 }),
+        mouseout:  e => geo.resetStyle(e.target)
+      });
+    }
+
+    const geo = L.geoJSON(data, { style, onEachFeature }).addTo(map);
+    map.fitBounds(geo.getBounds(), { padding: [30, 30] });
+
+    // ---- Legenda --------------------------------------------------------
+    const legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div');
+      div.style.cssText = 'background:#fff;padding:10px 12px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:12px;line-height:1.9;color:#333';
+      const grades = [0, 50, 100, 150, 300];
+      div.innerHTML = '<strong>os./km²</strong><br>';
+      for (let i = 0; i < grades.length; i++) {
+        const from = grades[i], to = grades[i + 1];
+        div.innerHTML += `<i style="display:inline-block;width:14px;height:14px;margin-right:6px;background:${kolor(from + 1)}"></i>${from}${to ? '&ndash;' + to : '+'}<br>`;
+      }
+      return div;
+    };
+    legend.addTo(map);
+  </script>
+</body>
+</html>

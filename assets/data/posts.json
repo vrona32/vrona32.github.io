@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Jak zrobić mapę choropletową w Leaflet",
+    "excerpt": "Krok po kroku: od danych GeoJSON, przez dobór skali barw, po interaktywne podpowiedzi. Praktyczny tutorial dla początkujących.",
+    "image": "assets/img/placeholder.svg",
+    "url": "blog/przyklad-wpis.html",
+    "date": "2026-06-22",
+    "readtime": "8 min czytania",
+    "tags": ["Tutorial", "Leaflet", "GeoJSON"]
+  },
+  {
+    "title": "5 zasad dobrego doboru kolorów na mapie",
+    "excerpt": "Dlaczego tęcza to zły pomysł i jak korzystać z palet ColorBrewer, żeby mapa była czytelna dla każdego.",
+    "image": "assets/img/placeholder.svg",
+    "url": "blog/przyklad-wpis.html",
+    "date": "2026-04-30",
+    "readtime": "5 min czytania",
+    "tags": ["Kartografia", "Design", "Kolory"]
+  }
+]

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220">
+  <rect width="220" height="220" fill="#d7efea"/>
+  <circle cx="110" cy="88" r="42" fill="#0d7d6e"/>
+  <path d="M40 210c0-45 32-72 70-72s70 27 70 72Z" fill="#0d7d6e"/>
+  <text x="110" y="200" font-family="Inter, sans-serif" font-size="13" fill="#0a6357" text-anchor="middle">Twoje zdjęcie</text>
+</svg>

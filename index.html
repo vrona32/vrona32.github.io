@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CartoGIS — portfolio kartograficzne i analizy przestrzenne</title>
+  <meta name="description" content="Portfolio i blog poświęcony kartografii, GIS oraz analizom przestrzennym. Mapy interaktywne, wizualizacje danych i studia przypadków.">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="index.html">
+  <header id="site-header"></header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Kartografia · GIS · dane przestrzenne</p>
+      <h1>Mapy, które opowiadają historie&nbsp;danych.</h1>
+      <p class="lead">Cześć! Tworzę mapy i analizy przestrzenne. Na tej stronie zbieram swoje projekty
+        kartograficzne oraz wpisy o tym, jak powstają — od pozyskania danych po finalną wizualizację.</p>
+      <div class="hero-cta">
+        <a class="btn btn--primary" href="portfolio.html">Zobacz portfolio</a>
+        <a class="btn btn--ghost" href="blog.html">Czytaj blog</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WYRÓŻNIONE PROJEKTY -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Portfolio</p>
+      <h2>Wybrane projekty</h2>
+      <p class="lead" style="margin-bottom:2.4rem">Interaktywne mapy i statyczne wizualizacje kartograficzne.</p>
+      <div class="grid" id="featured-projects"></div>
+      <div style="margin-top:2.4rem">
+        <a class="btn btn--ghost" href="portfolio.html">Wszystkie projekty →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAJNOWSZE WPISY -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <p class="eyebrow">Blog</p>
+      <h2>Najnowsze wpisy</h2>
+      <p class="lead" style="margin-bottom:2.4rem">Tutoriale, analizy i notatki z warsztatu kartografa.</p>
+      <div class="grid" id="latest-posts"></div>
+      <div style="margin-top:2.4rem">
+        <a class="btn btn--ghost" href="blog.html">Wszystkie wpisy →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="site-footer"></footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    renderProjects("featured-projects", { limit: 3 });
+    renderPosts("latest-posts", { limit: 3 });
+  </script>
+</body>
+</html>

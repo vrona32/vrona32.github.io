@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — CartoGIS</title>
+  <meta name="description" content="Galeria projektów kartograficznych: mapy interaktywne, wizualizacje danych przestrzennych i studia przypadków.">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="portfolio.html">
+  <header id="site-header"></header>
+
+  <section class="section section--tight" style="padding-bottom:0">
+    <div class="container">
+      <p class="eyebrow">Portfolio</p>
+      <h1>Projekty kartograficzne</h1>
+      <p class="lead">Zbiór map i analiz przestrzennych. Filtruj po kategorii, aby znaleźć to, co Cię interesuje.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:32px">
+    <div class="container">
+      <div class="filters" id="project-filters"></div>
+      <div class="grid" id="all-projects"></div>
+    </div>
+  </section>
+
+  <footer id="site-footer"></footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    renderProjects("all-projects", { filters: true });
+  </script>
+</body>
+</html>

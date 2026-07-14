@@ -1,0 +1,9 @@
+# Narzędzia lokalne / edytor
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Prywatna ściąga — nie publikować na GitHub
+readme_tutorial.md

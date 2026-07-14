@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jak zrobić mapę choropletową w Leaflet | CartoGIS</title>
+  <meta name="description" content="Tutorial krok po kroku: od danych GeoJSON po interaktywne podpowiedzi w Leaflet.">
+  <link rel="icon" href="../assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="blog.html">
+  <header id="site-header"></header>
+
+  <article class="article">
+    <div class="article-header">
+      <div class="container">
+        <a class="back-link" href="../blog.html">← Powrót do bloga</a>
+        <p class="eyebrow">Tutorial</p>
+        <h1>Jak zrobić mapę choropletową w Leaflet</h1>
+        <div class="post-meta">
+          <time datetime="2026-06-22">22 czerwca 2026</time> · 8 min czytania
+        </div>
+        <div class="tags">
+          <span class="tag tag--accent">Tutorial</span>
+          <span class="tag tag--accent">Leaflet</span>
+          <span class="tag tag--accent">GeoJSON</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container article-body">
+      <p class="lead">
+        Mapa choropletowa to jeden z najpopularniejszych typów map tematycznych. W tym wpisie pokażę,
+        jak zbudować taką mapę od zera — to szablon, który możesz podmienić na własną treść.
+      </p>
+
+      <h2>1. Przygotuj dane</h2>
+      <p>
+        Potrzebujesz warstwy wektorowej w formacie GeoJSON, w której każdy obiekt ma atrybut z wartością
+        do pokolorowania (np. gęstość zaludnienia). Dane przygotujesz w QGIS lub bibliotece GeoPandas:
+      </p>
+      <pre><code>import geopandas as gpd
+gdf = gpd.read_file("wojewodztwa.shp")
+gdf.to_file("dane.geojson", driver="GeoJSON")</code></pre>
+
+      <h2>2. Dobierz skalę barw</h2>
+      <p>
+        Dla danych ilościowych używaj sekwencyjnych palet <a href="https://colorbrewer2.org" target="_blank" rel="noopener">ColorBrewer</a>.
+        Unikaj tęczy — jest myląca i nieczytelna dla osób z zaburzeniami rozpoznawania barw.
+      </p>
+
+      <blockquote>
+        Złota zasada: im ciemniejszy kolor, tym wyższa wartość. Zadbaj o kontrast i dodaj legendę.
+      </blockquote>
+
+      <h2>3. Zbuduj mapę</h2>
+      <p>
+        Wczytaj GeoJSON do Leaflet i pokoloruj obiekty funkcją stylu opartą na wartości atrybutu.
+        Gotowy, działający przykład znajdziesz w
+        <a href="../projects/przyklad-mapa-interaktywna.html">tym projekcie</a> w portfolio.
+      </p>
+      <pre><code>L.geoJSON(geojson, {
+  style: f =&gt; ({ fillColor: kolor(f.properties.wartosc), fillOpacity: 0.8, weight: 1 }),
+  onEachFeature: (f, layer) =&gt; layer.bindTooltip(f.properties.nazwa)
+}).addTo(map);</code></pre>
+
+      <h2>Podsumowanie</h2>
+      <p>
+        To wszystko! Zastąp ten tekst własną treścią, podmień fragmenty kodu i dodaj zrzuty ekranu.
+        Aby dodać kolejny wpis, skopiuj ten plik i uzupełnij metadane w
+        <code>assets/data/posts.json</code>.
+      </p>
+    </div>
+  </article>
+
+  <footer id="site-footer"></footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
