@@ -250,8 +250,8 @@ html.dark        .theme-toggle .icon-moon { display: none; }
 /* ---------- Sekcja „O mnie" ---------- */
 .about-grid { display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: start; }
 .about-photo {
-  width: 220px; height: 220px; border-radius: var(--radius); object-fit: cover;
-  border: 1px solid var(--border); background: var(--bg-muted);
+  width: 220px; height: 220px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--border); background: var(--bg-muted);
 }
 .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 

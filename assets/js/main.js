@@ -9,12 +9,12 @@
 const SITE = {
   name: "CartoGIS",
   tagline: "Kartografia · GIS · analizy przestrzenne",
-  author: "Twoje Imię i Nazwisko",
+  author: "CartoGIS",
   year: 2026,
   social: {
     github:   "https://github.com/vrona32",
     linkedin: "",
-    email:    "mailto:kontakt@example.com",
+    email:    "mailto:cartogis.works@gmail.com",
   },
 };
 
@@ -163,7 +163,7 @@ async function renderProjects(targetId, { limit = null, filters = false } = {}) 
 
   const draw = list => el.innerHTML = list.length
     ? list.map(projectCard).join("")
-    : `<p class="empty">Brak projektów w tej kategorii — dodaj je w <code>assets/data/projects.json</code>.</p>`;
+    : `<p class="empty">Wkrótce pojawią się tutaj pierwsze projekty. Zajrzyj niebawem!</p>`;
 
   if (filters) {
     const cats = ["Wszystkie", ...new Set(data.flatMap(p => p.tags || []))];
@@ -194,7 +194,7 @@ async function renderPosts(targetId, { limit = null } = {}) {
   if (limit) items = items.slice(0, limit);
   el.innerHTML = items.length
     ? items.map(postCard).join("")
-    : `<p class="empty">Brak wpisów — dodaj je w <code>assets/data/posts.json</code>.</p>`;
+    : `<p class="empty">Wkrótce pojawią się tutaj pierwsze wpisy. Zajrzyj niebawem!</p>`;
 }
 
 /* --- Inicjalizacja: uruchom po załadowaniu DOM ------------------------- */
