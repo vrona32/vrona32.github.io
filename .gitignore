@@ -7,3 +7,6 @@ Thumbs.db
 
 # Prywatna ściąga — nie publikować na GitHub
 readme_tutorial.md
+
+# Szablony/gotowce do kopiowania — zostają lokalnie, nie trafiają na stronę
+_templates/

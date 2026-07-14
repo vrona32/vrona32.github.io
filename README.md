@@ -12,10 +12,7 @@ Bez żadnego procesu budowania — działa od razu na **GitHub Pages**.
 ├── about.html            → o mnie
 ├── CNAME                 → własna domena (cartogis.pl)
 ├── projects/             → strony pojedynczych projektów
-│   ├── przyklad-mapa-interaktywna.html   (mapa Leaflet)
-│   └── przyklad-mapa-statyczna.html      (mapa jako obraz)
 ├── blog/                 → strony pojedynczych wpisów
-│   └── przyklad-wpis.html
 └── assets/
     ├── css/style.css     → wszystkie style (motyw jasny/ciemny)
     ├── js/main.js        → nawigacja, motyw, renderowanie kart, dane witryny (obiekt SITE)
