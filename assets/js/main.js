@@ -12,9 +12,11 @@ const SITE = {
   author: "CartoGIS",
   year: 2026,
   social: {
-    github:   "https://github.com/vrona32",
-    linkedin: "",
-    email:    "mailto:cartogis.works@gmail.com",
+    github:    "https://github.com/vrona32",
+    instagram: "https://www.instagram.com/cartogis/",
+    reddit:    "https://www.reddit.com/user/Vroni_Zyris/",
+    linkedin:  "https://www.linkedin.com/in/maciekwrona/",
+    email:     "mailto:cartogis.works@gmail.com",
   },
 };
 
@@ -33,6 +35,8 @@ const ICON = {
   github: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.5-1.1-4.5-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.5 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.3 10.3 0 0 0 22 12.3C22 6.6 17.5 2 12 2Z"/></svg>`,
   linkedin: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.6h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9V9Z"/></svg>`,
   mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>`,
+  instagram: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>`,
+  reddit: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-6.994 4.87-3.865 0-6.994-2.176-6.994-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.11-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>`,
 };
 
 /* --- Motyw ------------------------------------------------------------- */
@@ -82,9 +86,11 @@ function renderHeader(active) {
 function renderFooter() {
   const s = SITE.social;
   const social = [
-    s.github   && `<a href="${s.github}" aria-label="GitHub" target="_blank" rel="noopener">${ICON.github}</a>`,
-    s.linkedin && `<a href="${s.linkedin}" aria-label="LinkedIn" target="_blank" rel="noopener">${ICON.linkedin}</a>`,
-    s.email    && `<a href="${s.email}" aria-label="E-mail">${ICON.mail}</a>`,
+    s.github    && `<a href="${s.github}" aria-label="GitHub" target="_blank" rel="noopener">${ICON.github}</a>`,
+    s.instagram && `<a href="${s.instagram}" aria-label="Instagram" target="_blank" rel="noopener">${ICON.instagram}</a>`,
+    s.reddit    && `<a href="${s.reddit}" aria-label="Reddit" target="_blank" rel="noopener">${ICON.reddit}</a>`,
+    s.linkedin  && `<a href="${s.linkedin}" aria-label="LinkedIn" target="_blank" rel="noopener">${ICON.linkedin}</a>`,
+    s.email     && `<a href="${s.email}" aria-label="E-mail">${ICON.mail}</a>`,
   ].filter(Boolean).join("");
 
   const footer = document.getElementById("site-footer");
@@ -98,6 +104,23 @@ function renderFooter() {
       </div>
       <div class="footer-social">${social}</div>
     </div>`;
+}
+
+/* --- Sekcja kontaktu z ikonami (strona "O mnie") ---------------------- */
+function renderContact(targetId) {
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const s = SITE.social;
+  const items = [
+    s.github    && { icon: ICON.github,    label: "GitHub",    href: s.github,    blank: true },
+    s.instagram && { icon: ICON.instagram, label: "Instagram", href: s.instagram, blank: true },
+    s.linkedin  && { icon: ICON.linkedin,  label: "LinkedIn",  href: s.linkedin,  blank: true },
+    s.reddit    && { icon: ICON.reddit,    label: "Reddit",    href: s.reddit,    blank: true },
+  ].filter(Boolean);
+  el.className = "contact-links";
+  el.innerHTML = items.map(i =>
+    `<a class="contact-link" href="${i.href}"${i.blank ? ' target="_blank" rel="noopener"' : ""}>${i.icon}<span>${i.label}</span></a>`
+  ).join("");
 }
 
 /* --- Formatowanie daty (pl) ------------------------------------------- */
@@ -202,4 +225,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const active = document.body.dataset.page || "";
   renderHeader(active);
   renderFooter();
+  renderContact("contact-links");
 });
