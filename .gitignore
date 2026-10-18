@@ -4,6 +4,7 @@
 .idea/
 .DS_Store
 Thumbs.db
+*.code-workspace
 
 # Prywatna ściąga — nie publikować na GitHub
 readme_tutorial.md

@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Motyw ustawiany przed renderem (bez mignięcia jasnego tła) -->
+  <script>
+    (function () {
+      var t = null; try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches))
+        document.documentElement.classList.add("dark");
+    })();
+  </script>
   <title>O mnie — CartoGIS</title>
   <meta name="description" content="Kim jestem i czym się zajmuję — kartografia, GIS, analizy przestrzenne.">
   <link rel="canonical" href="https://cartogis.pl/about.html">
@@ -24,7 +32,10 @@
   <meta name="twitter:description" content="Kim jestem i czym się zajmuję — kartografia, GIS, analizy przestrzenne.">
   <meta name="twitter:image" content="https://cartogis.pl/assets/img/og-image.jpg">
 
-  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -38,7 +49,7 @@
     "name": "Maciej Wrona",
     "url": "https://cartogis.pl/about.html",
     "jobTitle": "Kartograf / specjalista GIS",
-    "image": "https://cartogis.pl/assets/img/avatar.png",
+    "image": "https://cartogis.pl/assets/img/avatar.jpg",
     "sameAs": [
       "https://github.com/vrona32",
       "https://www.instagram.com/cartogis/",
@@ -49,14 +60,25 @@
   </script>
 </head>
 <body data-page="about.html">
-  <header id="site-header"></header>
+  <header id="site-header" class="site-header">
+    <!-- Statyczna nawigacja dla robotów i przeglądarek bez JS; main.js ją podmienia -->
+    <div class="container nav">
+      <a class="brand" href="index.html"><span>Carto<b>GIS</b></span></a>
+      <nav class="nav-links">
+        <a href="index.html">Start</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">O mnie</a>
+      </nav>
+    </div>
+  </header>
 
   <section class="section">
     <div class="container">
       <p class="eyebrow">O mnie</p>
       <h1>Cześć, jestem kartografem</h1>
       <div class="about-grid" style="margin-top:2.4rem">
-        <img class="about-photo" src="assets/img/avatar.png" alt="Zdjęcie profilowe">
+        <img class="about-photo" src="assets/img/avatar.jpg" width="220" height="220" alt="Maciej Wrona — zdjęcie profilowe">
         <div>
           <p class="lead" style="margin-bottom:1.2rem">
             Zajmuję się kartografią i analizami przestrzennymi. Zamieniam surowe dane geograficzne
@@ -79,14 +101,17 @@
           </div>
 
           <h3 style="margin-top:2rem">Kontakt i sociale:</h3>
-          <p class="muted" style="margin-bottom:.6rem"></p>
           <div id="contact-links" class="contact-links"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer id="site-footer"></footer>
+  <footer id="site-footer" class="site-footer">
+    <div class="container footer-inner">
+      <div class="muted" style="font-size:.9rem">© Maciej Wrona. Kartografia · GIS · analizy przestrzenne.</div>
+    </div>
+  </footer>
 
   <script src="assets/js/main.js"></script>
 </body>

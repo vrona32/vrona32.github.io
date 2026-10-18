@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Motyw ustawiany przed renderem (bez mignięcia jasnego tła) -->
+  <script>
+    (function () {
+      var t = null; try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches))
+        document.documentElement.classList.add("dark");
+    })();
+  </script>
   <title>Portfolio — CartoGIS</title>
   <meta name="description" content="Galeria projektów kartograficznych: mapy interaktywne, wizualizacje danych przestrzennych i studia przypadków.">
   <link rel="canonical" href="https://cartogis.pl/portfolio.html">
@@ -24,14 +32,28 @@
   <meta name="twitter:description" content="Galeria projektów kartograficznych: mapy interaktywne i wizualizacje danych przestrzennych.">
   <meta name="twitter:image" content="https://cartogis.pl/assets/img/og-image.jpg">
 
-  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body data-page="portfolio.html">
-  <header id="site-header"></header>
+  <header id="site-header" class="site-header">
+    <!-- Statyczna nawigacja dla robotów i przeglądarek bez JS; main.js ją podmienia -->
+    <div class="container nav">
+      <a class="brand" href="index.html"><span>Carto<b>GIS</b></span></a>
+      <nav class="nav-links">
+        <a href="index.html">Start</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">O mnie</a>
+      </nav>
+    </div>
+  </header>
 
   <section class="section section--tight" style="padding-bottom:0">
     <div class="container">
@@ -48,7 +70,11 @@
     </div>
   </section>
 
-  <footer id="site-footer"></footer>
+  <footer id="site-footer" class="site-footer">
+    <div class="container footer-inner">
+      <div class="muted" style="font-size:.9rem">© Maciej Wrona. Kartografia · GIS · analizy przestrzenne.</div>
+    </div>
+  </footer>
 
   <script src="assets/js/main.js"></script>
   <script>

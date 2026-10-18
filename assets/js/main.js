@@ -9,8 +9,8 @@
 const SITE = {
   name: "CartoGIS",
   tagline: "Kartografia · GIS · analizy przestrzenne",
-  author: "CartoGIS",
-  year: 2026,
+  author: "Maciej Wrona",
+  year: new Date().getFullYear(),
   social: {
     github:    "https://github.com/vrona32",
     instagram: "https://www.instagram.com/cartogis/",
@@ -39,15 +39,24 @@ const ICON = {
   reddit: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-6.994 4.87-3.865 0-6.994-2.176-6.994-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.11-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>`,
 };
 
+/* --- Escapowanie tekstu z plików JSON przed wstawieniem do HTML -------- */
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+
 /* --- Motyw ------------------------------------------------------------- */
+/* Klasa "dark" jest ustawiana już przez skrypt inline w <head> (bez mignięcia);
+   to tylko zabezpieczenie dla stron, które go nie mają. */
 (function initTheme() {
-  const saved = localStorage.getItem("theme");
+  let saved = null;
+  try { saved = localStorage.getItem("theme"); } catch {}
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   if (saved === "dark" || (!saved && prefersDark)) document.documentElement.classList.add("dark");
 })();
 function toggleTheme() {
   const isDark = document.documentElement.classList.toggle("dark");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
+  try { localStorage.setItem("theme", isDark ? "dark" : "light"); } catch {}
 }
 
 /* --- Nagłówek ---------------------------------------------------------- */
@@ -73,13 +82,21 @@ function renderHeader(active) {
         <button class="theme-toggle" id="theme-toggle" aria-label="Przełącz motyw">
           <span class="icon-moon">${ICON.moon}</span><span class="icon-sun">${ICON.sun}</span>
         </button>
-        <button class="nav-burger" id="nav-burger" aria-label="Menu">${ICON.burger}</button>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">${ICON.burger}</button>
       </div>
     </div>`;
 
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
-  document.getElementById("nav-burger").addEventListener("click", () =>
-    document.getElementById("nav-links").classList.toggle("open"));
+
+  const burger = document.getElementById("nav-burger");
+  const navLinks = document.getElementById("nav-links");
+  const setMenu = open => {
+    navLinks.classList.toggle("open", open);
+    burger.setAttribute("aria-expanded", String(open));
+  };
+  burger.addEventListener("click", () => setMenu(!navLinks.classList.contains("open")));
+  navLinks.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
 }
 
 /* --- Stopka ------------------------------------------------------------ */
@@ -116,6 +133,7 @@ function renderContact(targetId) {
     s.instagram && { icon: ICON.instagram, label: "Instagram", href: s.instagram, blank: true },
     s.linkedin  && { icon: ICON.linkedin,  label: "LinkedIn",  href: s.linkedin,  blank: true },
     s.reddit    && { icon: ICON.reddit,    label: "Reddit",    href: s.reddit,    blank: true },
+    s.email     && { icon: ICON.mail,      label: s.email.replace(/^mailto:/, ""), href: s.email, blank: false },
   ].filter(Boolean);
   el.className = "contact-links";
   el.innerHTML = items.map(i =>
@@ -131,37 +149,40 @@ function formatDate(iso) {
 }
 
 /* --- Karta projektu / wpisu ------------------------------------------- */
+function tagList(tags) {
+  return (tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
+}
+
 function projectCard(p) {
-  const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join("");
-  const href = `${BASE}${p.url}`;
-  const img = p.image ? `${BASE}${p.image}` : `${BASE}assets/img/placeholder.svg`;
+  const href = esc(`${BASE}${p.url}`);
+  const img = esc(p.image ? `${BASE}${p.image}` : `${BASE}assets/img/placeholder.svg`);
   return `
     <article class="card">
       <a class="card__media" href="${href}">
-        <img src="${img}" alt="${p.title}" loading="lazy">
-        ${p.type ? `<span class="card__badge">${p.type}</span>` : ""}
+        <img src="${img}" alt="${esc(p.title)}" loading="lazy">
+        ${p.type ? `<span class="card__badge">${esc(p.type)}</span>` : ""}
       </a>
       <div class="card__body">
-        <h3 class="card__title"><a href="${href}">${p.title}</a></h3>
-        <p class="card__desc">${p.description}</p>
-        <div class="tags">${tags}</div>
+        <h3 class="card__title"><a href="${href}">${esc(p.title)}</a></h3>
+        <p class="card__desc">${esc(p.description)}</p>
+        <div class="tags">${tagList(p.tags)}</div>
       </div>
     </article>`;
 }
 
 function postCard(p) {
-  const href = `${BASE}${p.url}`;
-  const img = p.image ? `${BASE}${p.image}` : `${BASE}assets/img/placeholder.svg`;
+  const href = esc(`${BASE}${p.url}`);
+  const img = esc(p.image ? `${BASE}${p.image}` : `${BASE}assets/img/placeholder.svg`);
   return `
     <article class="card">
       <a class="card__media" href="${href}">
-        <img src="${img}" alt="${p.title}" loading="lazy">
+        <img src="${img}" alt="${esc(p.title)}" loading="lazy">
       </a>
       <div class="card__body">
-        <div class="card__meta"><time datetime="${p.date}">${formatDate(p.date)}</time>${p.readtime ? ` · ${p.readtime}` : ""}</div>
-        <h3 class="card__title" style="margin-top:.4em"><a href="${href}">${p.title}</a></h3>
-        <p class="card__desc">${p.excerpt}</p>
-        <div class="tags">${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="card__meta"><time datetime="${esc(p.date)}">${esc(formatDate(p.date))}</time>${p.readtime ? ` · ${esc(p.readtime)}` : ""}</div>
+        <h3 class="card__title" style="margin-top:.4em"><a href="${href}">${esc(p.title)}</a></h3>
+        <p class="card__desc">${esc(p.excerpt)}</p>
+        <div class="tags">${tagList(p.tags)}</div>
       </div>
     </article>`;
 }
@@ -193,7 +214,7 @@ async function renderProjects(targetId, { limit = null, filters = false } = {}) 
     const bar = document.getElementById("project-filters");
     if (bar) {
       bar.innerHTML = cats.map((c, i) =>
-        `<button class="filter-btn${i === 0 ? " active" : ""}" data-cat="${c}">${c}</button>`).join("");
+        `<button class="filter-btn${i === 0 ? " active" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
       bar.addEventListener("click", e => {
         const btn = e.target.closest(".filter-btn");
         if (!btn) return;
