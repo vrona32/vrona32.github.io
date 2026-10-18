@@ -23,22 +23,3 @@ Bez żadnego procesu budowania — działa od razu na **GitHub Pages**.
 ```
 
 Zbudowano jako czysty HTML/CSS/JS — bez zależności i procesu budowania.
-
-## 🖥️ Podgląd lokalny
-
-Karty projektów i wpisów są wczytywane przez `fetch()`, który nie działa po otwarciu
-pliku bezpośrednio (`file://`). Uruchom prosty serwer w katalogu repozytorium:
-
-```bash
-python -m http.server 8000
-```
-
-i otwórz <http://localhost:8000>.
-
-## 🗺️ Sitemap
-
-Po dodaniu wpisu lub projektu (plik HTML + wpis w JSON) wygeneruj `sitemap.xml` od nowa:
-
-```bash
-python scripts/generate_sitemap.py
-```
